@@ -28,8 +28,6 @@ typedef struct list
 void InsertList(List *pl,lli id,char n[],float p,int x);
 void IncreaseByID(List *pl,lli id,int x);
 void IncreaseByName(List *pl,char name[],int x);
-void IncreaseByID(List *pl,lli id,int x);
-void IncreaseByName(List *pl,char name[],int x);
 void decreaseByID(List *pl,lli id,int x);
 void decreaseByName(List *pl,char name[],int x);
 void DeleteListID(List *pl,lli id);
