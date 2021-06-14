@@ -31,6 +31,11 @@ void IncreaseByName(List *pl,char name[],int x);
 void IncreaseByID(List *pl,lli id,int x);
 void IncreaseByName(List *pl,char name[],int x);
 void DeleteListID(List *pl,lli id);
+void CreateList(List *pl);
+int ListEmpty(List *pl);
+int ListFull(List *pl);
+int ListSize(List *pl);
+void DestoryList(List *pl);
 
 int main()
 {
@@ -343,4 +348,39 @@ void IncreaseByName(List *pl,char name[],int x)
         printf("Name not found !\n");
 
     }
+}
+
+void DestoryList(List *pl)
+{
+    ListNode *q;
+    while(pl->head)
+    {
+        q=pl->head->next;
+        free(pl->head);
+        pl->head=q;
+    }
+    pl->size=0;
+    //O(N)
+}
+
+void CreateList(List *pl)
+{
+    pl->head=NULL;
+    pl->size=0;
+    //O(1)
+}
+int ListEmpty(List *pl)
+{
+    return !pl->head;
+    //O(1)
+}
+int ListFull(List *pl)
+{
+    return 0;
+    //O(1)
+}
+int ListSize(List *pl)
+{
+    return pl->size;
+    //O(1)
 }
