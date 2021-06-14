@@ -30,6 +30,8 @@ void IncreaseByID(List *pl,lli id,int x);
 void IncreaseByName(List *pl,char name[],int x);
 void IncreaseByID(List *pl,lli id,int x);
 void IncreaseByName(List *pl,char name[],int x);
+void decreaseByID(List *pl,lli id,int x);
+void decreaseByName(List *pl,char name[],int x);
 void DeleteListID(List *pl,lli id);
 void RetriveList(List *pl,lli id);
 void TraverseList(List *pl,void (*pf)(char name[],lli id,float p,int n));
@@ -449,6 +451,62 @@ void IncreaseByName(List *pl,char name[],int x)
      if(!pn)
         printf("Name not found !\n");
 
+    }
+}
+
+void decreaseByID(List *pl,lli id,int x)
+{
+    ListNode *pn=pl->head;
+    if(pn==NULL) printf("ID not found !\n");
+    else
+    {
+    while(pn)
+        {
+          if(pn->id==id)
+          break;
+          pn=pn->next;
+        }
+
+    if(pn==NULL) printf("ID not found !\n");
+    else
+    {
+        if(pn->nbook>=x)
+            {
+                pn->nbook-=x;
+                printf("Book decreased successfully !\n");
+            }
+        else
+            {
+                printf("You don't have enough books\nYou only have %d\n",pn->nbook);
+            }
+    }
+    }
+}
+void decreaseByName(List *pl,char name[],int x)
+{
+    ListNode *pn=pl->head;
+    if(pn==NULL) printf("Name not found !\n");
+    else
+    {
+    while(pn)
+    {
+        if(strcmp(pn->name,name)==0)
+            break;
+        pn=pn->next;
+    }
+    if(pn==NULL) printf("Name not found !\n");
+    else
+    {
+        if(pn->nbook>=x)
+      {
+          pn->nbook-=x;
+          printf("Book decreased successfully !\n");
+      }
+    else
+        {
+            printf("You don't have enough books\nYou only have %d\n",pn->nbook);
+        }
+    }
     }
 }
 
