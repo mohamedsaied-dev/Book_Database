@@ -36,6 +36,9 @@ int ListEmpty(List *pl);
 int ListFull(List *pl);
 int ListSize(List *pl);
 void DestoryList(List *pl);
+char gettingStarted();
+void LoadData(List *pl);
+void SaveData(List *pl);
 
 int main()
 {
@@ -384,3 +387,58 @@ int ListSize(List *pl)
     return pl->size;
     //O(1)
 }
+
+char gettingStarted()
+{
+    char c;
+    printf("\t\t\t\t----------------------------------------\n");
+    printf("\t\t\t\tTo add new book press 1\n");
+    printf("\t\t\t\tTo increase amount of old book press 2\n");
+    printf("\t\t\t\tTo delete book press 3\n");
+    printf("\t\t\t\tTo decrease amount of old book press 4\n");
+    printf("\t\t\t\tTo print data press 5\n");
+    printf("\t\t\t\tTo modify the price press 6\n");
+    printf("\t\t\t\tTo exit press 7\n");
+    printf("\t\t\t\tATTENTION: To save data to the file press s\n");
+    printf("\t\t\t\t----------------------------------------\n");
+    fflush(stdin);
+    scanf("%c",&c);
+
+    return c;
+}
+void LoadData(List *pl)
+{
+    while(fread(&t1,sizeof(t1),1,f_open))
+    {
+    InsertList(pl,t1.id,t1.name,t1.price,t1.nbook);
+    }
+    fclose(f_open);
+}
+
+void SaveData(List *pl)
+{
+
+    ListNode *pn;
+
+    if(!(f_open=fopen("1.dat","wb")))
+    {
+        printf("Can't open The file\n");
+        return 0;
+    }
+    else
+    {
+        for(pn=pl->head;pn;pn=pn->next)
+        {
+            t1.id=pn->id;
+            strcpy(t1.name,pn->name);
+            t1.price=pn->price;
+            t1.nbook=pn->nbook;
+            fwrite(&t1,sizeof(t1),1,f_open);
+
+        }
+    }
+    fclose(f_open);
+    printf("\nData saved !\n");
+    return 0;
+}
+
