@@ -2,6 +2,29 @@
 #include <stdlib.h>
 #include<conio.h>
 
+typedef struct listnode ListNode;
+typedef long long int lli;
+struct listnode
+{
+    lli id;
+    char name [25];
+    float price;
+    int nbook;
+    ListNode *next;
+};
+struct temps
+    {
+     lli id;
+     char name [25];
+     float price;
+     int nbook;
+    }t1;
+typedef struct list
+{
+    ListNode *head;
+    int size;
+}List;
+
 void InsertList(List *pl,lli id,char n[],float p,int x);
 void IncreaseByID(List *pl,lli id,int x);
 void IncreaseByName(List *pl,char name[],int x);
