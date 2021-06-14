@@ -317,6 +317,99 @@ void DeleteListID(List *pl,lli id)
 
 }
 
+void RetriveList(List *pl,lli id)
+{
+    ListNode *qn=pl->head;
+    if(qn==NULL) printf("ID not found !\n");
+    else
+    {
+        while(qn)
+        {
+            if(qn->id==id)
+            {
+                Display(qn->name,qn->id,qn->price,qn->nbook);
+                return 0;
+            }
+        qn=qn->next;
+        }
+        if(!qn)
+            printf("Book not found");
+    }
+    //O(N)
+}
+
+void TraverseList(List *pl,void (*pf)(char name[],lli id,float p,int n))
+{
+    if(pl->head==NULL)
+        printf("----------------------------------------\nThere's no book in your database\n----------------------------------------\n");
+    else
+    {
+    printf("Number of Different books: %d\n\n",pl->size);
+    int i=1;
+    for(ListNode *ln=pl->head;ln;ln=ln->next)
+    {
+        printf("Book number %d:\n",i++);
+        (*pf)(ln->name,ln->id,ln->price,ln->nbook);
+    }
+    //O(N)
+    }
+}
+void Display(char name[],lli id,float p,int n)
+{
+    printf("---------------------------------------\n");
+    printf("Book name: ");
+    puts(name);
+    printf("\nID: %lld\nPrice: %.2f\nNumber of same book: %d\n",id,p,n);
+    printf("---------------------------------------\n");
+    //O(1)
+}
+
+void ModifyPriceID(List *pl,lli id,float y)
+{
+    printf("Y=%.2f\n",y);
+
+    ListNode *qn=pl->head;
+    if(qn==NULL) printf("Empty Database !\n");
+    else
+    {
+        while(qn)
+        {
+            if(qn->id==id)
+            {
+                qn->price=y;
+                printf("qn->price= %.2f\nBook modified\n",qn->price);
+                return 0;
+            }
+        qn=qn->next;
+        }
+        if(!qn)
+            printf("Book not found !\n");
+    }
+    //O(N)
+}
+void ModifyPriceName(List *pl,char n[],float p)
+{
+
+    ListNode *qn=pl->head;
+    if(qn==NULL) printf("Empty Database !\n");
+    else
+    {
+        while(qn)
+        {
+            if(strcmp(qn->name,n)==0)
+            {
+                qn->price=p;
+                printf("Book modified\n");
+                return 0;
+            }
+            qn=qn->next;
+        }
+        if(!qn)
+            printf("Book not found !\n");
+    }
+    //O(N)
+}
+
 void IncreaseByID(List *pl,lli id,int x)
 {
     ListNode *pn=pl->head;
