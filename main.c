@@ -39,6 +39,7 @@ void DestoryList(List *pl);
 char gettingStarted();
 void LoadData(List *pl);
 void SaveData(List *pl);
+FILE *f_open;
 
 int main()
 {
