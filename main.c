@@ -366,7 +366,6 @@ void Display(char name[],lli id,float p,int n)
 
 void ModifyPriceID(List *pl,lli id,float y)
 {
-    printf("Y=%.2f\n",y);
 
     ListNode *qn=pl->head;
     if(qn==NULL) printf("Empty Database !\n");
@@ -377,7 +376,6 @@ void ModifyPriceID(List *pl,lli id,float y)
             if(qn->id==id)
             {
                 qn->price=y;
-                printf("qn->price= %.2f\nBook modified\n",qn->price);
                 return 0;
             }
         qn=qn->next;
