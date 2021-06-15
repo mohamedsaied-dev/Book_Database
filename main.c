@@ -176,7 +176,7 @@ int main()
                 printf("Enter the id of the book: ");
                 scanf("%lld",&id);
                 printf("Enter the new price: ");
-                scanf("%f",&pp);printf("%f",pp);
+                scanf("%f",&pp);
                 ModifyPriceID(&l,id,pp);
             }
             else if(temp==2)
