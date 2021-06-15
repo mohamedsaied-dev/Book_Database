@@ -85,7 +85,7 @@ int main()
         }
     case '2':
         {
-            printf("To increase by id press 1\n\tto increase by name press 2\n ");
+            printf("To increase by id press 1\nto increase by name press 2\n ");
             scanf("%d",&temp);
             if(temp==1)
             {
@@ -161,8 +161,9 @@ int main()
                 scanf("%lld",&id);
                 RetriveList(&l,id);
             }
-            else
+            else if(temp==2)
                 TraverseList(&l,Display);
+            else printf("Wrong answer !\n");
             break;
         }
 
@@ -223,6 +224,16 @@ int main()
 
 void InsertList(List *pl,lli id,char n[],float p,int x)
 {
+    
+    /*STEP 1) If Linked list is empty then make the node as head and return it.
+    STEP 2) If value of the node to be inserted is smaller than value of head node,
+    then insert the node at start and make it head.
+    STEP 3) Find the appropriate node after which the input node is to be inserted.
+    To find the appropriate node start from head,
+    keep moving until we reach a node whose value is greater than the input node.
+    The node just before the node is the appropriate node.*/
+
+
     ListNode *pn= (ListNode*)malloc(sizeof( ListNode));
 
     pn->id=id;
