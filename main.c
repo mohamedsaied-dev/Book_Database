@@ -114,11 +114,38 @@ int main()
         }
     case '3':
         {
+            char q;
+        printf("To delete a single book press 1\nTo destroy all database press 2: ");
+        scanf("%d",&temp);
+        if(temp==1)
+        {
         printf("Enter the id of the book: ");
         scanf("%lld",&id);
         DeleteListID(&l,id);
-        printf("Book Deleted successfully !\n");
         break;
+        }
+        else if(temp==2)
+         {
+
+            printf("Are you sure you want to destroy all database? [y/n]\n");
+            fflush(stdin);
+            scanf("%c",&q);
+            if(q=='y'||q=='Y')
+            {
+                DestoryList(&l);
+                SaveData(&l);
+
+                break;
+            }
+            else
+                break;
+        }
+        else
+            {
+                printf("Wrong answer !\n");
+                break;
+            }
+
         }
     case '4':
         {
@@ -208,6 +235,13 @@ int main()
     case 's':
         {
             SaveData(&l);
+            printf("\nData saved !\n");
+            break;
+        }
+    case 'S':
+        {
+            SaveData(&l);
+            printf("\nData saved !\n");
             break;
         }
     default:
@@ -288,10 +322,8 @@ void DeleteListID(List *pl,lli id)
         {
             pl->head=a->next;
             free(a);
-            fflush(stdout);
             pl->size--;
-            printf("Book deleted!\n");
-
+            printf("Book deleted successfully !\n");
             return 0;
         }
         else
@@ -308,8 +340,6 @@ void DeleteListID(List *pl,lli id)
             else if(a->id!=id)
                 break;
         }
-
-
         if(!a)
         {
             printf("ID not found!\n");
@@ -519,7 +549,14 @@ void decreaseByName(List *pl,char name[],int x)
 
 void DestoryList(List *pl)
 {
-    ListNode *q;
+  ListNode *q;
+    if(pl->head==NULL)
+    {
+        printf("Database is empty !\n");
+        return 0;
+    }
+    else
+   {
     while(pl->head)
     {
         q=pl->head->next;
@@ -527,6 +564,8 @@ void DestoryList(List *pl)
         pl->head=q;
     }
     pl->size=0;
+    printf("Data deleted successfully !\n");
+   }
     //O(N)
 }
 
@@ -602,7 +641,6 @@ void SaveData(List *pl)
         }
     }
     fclose(f_open);
-    printf("\nData saved !\n");
     return 0;
 }
 
