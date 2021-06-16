@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include<conio.h>
 
 typedef struct listnode ListNode;
@@ -7,7 +8,7 @@ typedef long long int lli;
 struct listnode
 {
     lli id;
-    char name [25];
+    char name [40];
     float price;
     int nbook;
     ListNode *next;
@@ -15,7 +16,7 @@ struct listnode
 struct temps
     {
      lli id;
-     char name [25];
+     char name [40];
      float price;
      int nbook;
     }t1;
@@ -25,14 +26,14 @@ typedef struct list
     int size;
 }List;
 
-void InsertList(List *pl,lli id,char n[],float p,int x);
+bool InsertList(List *pl,lli id,char n[],float p,int x);
 void IncreaseByID(List *pl,lli id,int x);
 void IncreaseByName(List *pl,char name[],int x);
 void decreaseByID(List *pl,lli id,int x);
 void decreaseByName(List *pl,char name[],int x);
 void DeleteListID(List *pl,lli id);
 void RetriveList(List *pl,lli id);
-void TraverseList(List *pl,void (*pf)(char name[],lli id,float p,int n));
+void TraverseList(List *pl);
 void Display(char name[],lli id,float p,int n);
 void ModifyPriceID(List *pl,lli id,float y);
 void ModifyPriceName(List *pl,char n[],float p);
@@ -59,9 +60,9 @@ int main()
             LoadData(&l);
     while (1<2)
     {
-        lli id ,*Pid;
-        float price,*Pprice;
-        char name[25],rname[25];
+        lli id ;
+        float price;
+        char name[25];
         int temp,amount,*nbooks,x;
 
 
@@ -79,8 +80,10 @@ int main()
             scanf("%f",&price);
             printf("Enter number of books: ");
             scanf("%d",&x);
-            InsertList(&l,id,name,price,x);
-            printf("Book has been added successfully !\n");
+            bool isSuccess = InsertList(&l,id,name,price,x);
+            if (isSuccess){
+                    printf("Book has been added successfully !\n");
+            }
             break;
         }
     case '2':
@@ -189,7 +192,7 @@ int main()
                 RetriveList(&l,id);
             }
             else if(temp==2)
-                TraverseList(&l,Display);
+                TraverseList(&l);
             else printf("Wrong answer !\n");
             break;
         }
@@ -256,7 +259,7 @@ int main()
 
 }
 
-void InsertList(List *pl,lli id,char n[],float p,int x)
+bool InsertList(List *pl,lli id,char n[],float p,int x)
 {
     
     /*STEP 1) If Linked list is empty then make the node as head and return it.
@@ -274,7 +277,12 @@ void InsertList(List *pl,lli id,char n[],float p,int x)
     pn->price=p;
     strcpy(pn->name,n);
     pn->nbook=x;
-
+    ListNode *qn=pl->head;
+    while(qn)
+    {if(qn->id == id)
+        {   printf("ID is already taken, try another ID...\n");
+            return false;}
+        qn=qn->next;}
     if(pl->head==NULL)
     {
         pn->next=pl->head;
@@ -337,25 +345,22 @@ void DeleteListID(List *pl,lli id)
                 a=a->next;
                 b=b->next;
             }
-            else if(a->id!=id)
-                break;
+            else if(a->id==id)
+            {
+             b->next=a->next;
+             free(a);
+             pl->size--;
+             printf("Book deleted successfully !\n");
+             return 0;
+            }
         }
         if(!a)
         {
             printf("ID not found!\n");
             return 0;
         }
-        else if(a->id==id)
-        {
-            b->next=a->next;
-             free(a);
-              pl->size--;
-        }
         }
     }
-    SaveData(pl);
-    LoadData(pl);
-
 }
 
 void RetriveList(List *pl,lli id)
@@ -379,7 +384,7 @@ void RetriveList(List *pl,lli id)
     //O(N)
 }
 
-void TraverseList(List *pl,void (*pf)(char name[],lli id,float p,int n))
+void TraverseList(List *pl)
 {
     if(pl->head==NULL)
         printf("----------------------------------------\nThere's no book in your database\n----------------------------------------\n");
@@ -390,7 +395,7 @@ void TraverseList(List *pl,void (*pf)(char name[],lli id,float p,int n))
     for(ListNode *ln=pl->head;ln;ln=ln->next)
     {
         printf("Book number %d:\n",i++);
-        (*pf)(ln->name,ln->id,ln->price,ln->nbook);
+        Display(ln->name,ln->id,ln->price,ln->nbook);
     }
     //O(N)
     }
@@ -417,6 +422,7 @@ void ModifyPriceID(List *pl,lli id,float y)
             if(qn->id==id)
             {
                 qn->price=y;
+                printf("Book modified\n");
                 return 0;
             }
         qn=qn->next;
