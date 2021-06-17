@@ -261,58 +261,38 @@ int main()
 
 bool InsertList(List *pl,lli id,char n[],float p,int x)
 {
-    
-    /*STEP 1) If Linked list is empty then make the node as head and return it.
-    STEP 2) If value of the node to be inserted is smaller than value of head node,
-    then insert the node at start and make it head.
-    STEP 3) Find the appropriate node after which the input node is to be inserted.
-    To find the appropriate node start from head,
-    keep moving until we reach a node whose value is greater than the input node.
-    The node just before the node is the appropriate node.*/
-
 
     ListNode *pn= (ListNode*)malloc(sizeof( ListNode));
-
+    pn->next=NULL;
     pn->id=id;
     pn->price=p;
     strcpy(pn->name,n);
     pn->nbook=x;
     ListNode *qn=pl->head;
+
     while(qn)
-    {if(qn->id == id)
+    {
+        if(qn->id == id)
         {   printf("ID is already taken, try another ID...\n");
             return false;}
         qn=qn->next;}
-    if(pl->head==NULL)
-    {
-        pn->next=pl->head;
-        pl->head=pn;
-    }
-    else
-    {
-        ListNode *a=pl, *b=pl->head;
-        if(pn->id<b->id)
+        if(pl->head==NULL || pl->head->id > id)
         {
             pn->next=pl->head;
             pl->head=pn;
         }
-        else if(pn->id>b->id&&b->next==NULL)
-        {
-            pn->next=NULL;
-            pl->head->next=pn;
-        }
         else
         {
-            a=pl->head;
-            b=pl->head->next;
-            while(pn->id>b->id&&b->next!=NULL)
-                b=b->next;
-            pn->next=b->next;
-            b->next=pn;
+            ListNode *temp=pl->head;
+            while (temp->next !=NULL && temp->next->id < id)
+            {
+                temp=temp->next;
+            }
+            pn->next=temp->next;
+            temp->next=pn;
         }
-    }
-
-     pl->size++;
+        pl->size++;
+    return true;
     //O(N)
 }
 
